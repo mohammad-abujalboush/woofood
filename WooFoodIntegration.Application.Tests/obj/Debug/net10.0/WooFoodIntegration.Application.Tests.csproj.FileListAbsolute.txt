@@ -117,3 +117,4 @@
 /config/workspace/WooFood/WooFoodIntegration.Application.Tests/obj/Debug/net10.0/WooFoodIntegration.Application.Tests.pdb
 /config/workspace/WooFood/WooFoodIntegration.Application.Tests/obj/Debug/net10.0/WooFoodIntegration.Application.Tests.genruntimeconfig.cache
 /config/workspace/WooFood/WooFoodIntegration.Application.Tests/obj/Debug/net10.0/ref/WooFoodIntegration.Application.Tests.dll
+/config/workspace/WooFood/WooFoodIntegration.Application.Tests/obj/Debug/net10.0/WooFoodIntegration.Application.Tests.sourcelink.json

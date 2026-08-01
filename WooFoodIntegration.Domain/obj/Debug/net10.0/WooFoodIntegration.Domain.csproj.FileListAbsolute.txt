@@ -9,3 +9,4 @@
 /config/workspace/WooFood/WooFoodIntegration.Domain/obj/Debug/net10.0/refint/WooFoodIntegration.Domain.dll
 /config/workspace/WooFood/WooFoodIntegration.Domain/obj/Debug/net10.0/WooFoodIntegration.Domain.pdb
 /config/workspace/WooFood/WooFoodIntegration.Domain/obj/Debug/net10.0/ref/WooFoodIntegration.Domain.dll
+/config/workspace/WooFood/WooFoodIntegration.Domain/obj/Debug/net10.0/WooFoodIntegration.Domain.sourcelink.json

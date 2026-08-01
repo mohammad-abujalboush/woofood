@@ -102,4 +102,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// --- AUTO MIGRATE DATABASE ON STARTUP ---
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.EnsureCreated(); // Or dbContext.Database.Migrate(); if using EF Migrations
+}
+// ----------------------------------------
+
 app.Run();

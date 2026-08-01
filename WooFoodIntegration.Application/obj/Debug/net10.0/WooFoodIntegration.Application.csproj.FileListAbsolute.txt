@@ -13,3 +13,4 @@
 /config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net10.0/refint/WooFoodIntegration.Application.dll
 /config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net10.0/WooFoodIntegration.Application.pdb
 /config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net10.0/ref/WooFoodIntegration.Application.dll
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net10.0/WooFoodIntegration.Application.sourcelink.json
