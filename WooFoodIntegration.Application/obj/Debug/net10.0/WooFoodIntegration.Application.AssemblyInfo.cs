@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WooFoodIntegration.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c932150e5aab01a206fbac33ae99a1f6eeb7b68")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+65a1017d9e5c294a8880d7f359db626643f65b4a")]
 [assembly: System.Reflection.AssemblyProductAttribute("WooFoodIntegration.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WooFoodIntegration.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
