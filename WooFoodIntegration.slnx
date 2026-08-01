@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="WooFoodIntegration.API/WooFoodIntegration.API.csproj" />
+  <Project Path="WooFoodIntegration.Application.Tests/WooFoodIntegration.Application.Tests.csproj" />
+  <Project Path="WooFoodIntegration.Application/WooFoodIntegration.Application.csproj" />
+  <Project Path="WooFoodIntegration.Domain/WooFoodIntegration.Domain.csproj" />
+</Solution>

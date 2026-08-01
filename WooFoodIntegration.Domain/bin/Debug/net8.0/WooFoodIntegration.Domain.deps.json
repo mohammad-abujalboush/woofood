@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "WooFoodIntegration.Domain/1.0.0": {
+        "runtime": {
+          "WooFoodIntegration.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WooFoodIntegration.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

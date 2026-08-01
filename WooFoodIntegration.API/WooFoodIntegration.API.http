@@ -1,0 +1,6 @@
+@WooFoodIntegration.API_HostAddress = http://localhost:5088
+
+GET {{WooFoodIntegration.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

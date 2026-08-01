@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WooFood Integration Setup Guide</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #080c14; color: #e5e7eb; font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.7; }
+        .glass-card { background: rgba(18, 24, 38, 0.75); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; }
+        .code-box { background: #04060a; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; padding: 12px 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #38bdf8; word-break: break-all; }
+        .step-badge { width: 36px; height: 36px; background: #2563eb; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+        .alert-custom { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fcd34d; }
+    </style>
+</head>
+<body class="py-5">
+    <div class="container" style="max-width: 850px;">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1.5 rounded-pill font-monospace mb-2">Setup Manual</span>
+            <h1 class="fw-bold text-white display-6">WooCommerce ➔ Foodics Integration</h1>
+            <p class="text-secondary">Complete step-by-step instructions for linking orders and syncing inventory.</p>
+        </div>
+
+        <!-- Warning Callout -->
+        <div class="alert alert-custom rounded-4 p-4 mb-4 d-flex align-items-start gap-3">
+            <i class="bi bi-exclamation-triangle-fill fs-4 text-warning flex-shrink-0"></i>
+            <div>
+                <h6 class="fw-bold text-warning mb-1">Read Before Starting</h6>
+                <p class="small mb-0 text-secondary">Follow these steps exactly in order. Do not skip any fields. If you do not have a <strong>Client Access Key</strong>, request one from your system administrator before proceeding.</p>
+            </div>
+        </div>
+
+        <!-- STEP 1 -->
+        <div class="glass-card p-4 mb-4">
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="step-badge">1</div>
+                <div>
+                    <h4 class="text-white fw-bold mb-1">Collect Required Credentials</h4>
+                    <p class="text-secondary small mb-0">Before doing anything, gather the following 4 pieces of information from the restaurant:</p>
+                </div>
+            </div>
+            <div class="ps-5">
+                <ul class="list-unstyled small text-secondary mb-0 d-flex flex-column gap-2">
+                    <li><i class="bi bi-check2-circle text-success me-1"></i> <strong>Restaurant Name:</strong> e.g., Burger House</li>
+                    <li><i class="bi bi-check2-circle text-success me-1"></i> <strong>WooCommerce Base URL:</strong> Their website link (e.g., <code>https://burgerhouse.com</code>)</li>
+                    <li><i class="bi bi-check2-circle text-success me-1"></i> <strong>Foodics API Domain:</strong> E.g., <code>https://api-sandbox.foodics.com</code> or the live API URL.</li>
+                    <li><i class="bi bi-check2-circle text-success me-1"></i> <strong>Foodics Bearer Token:</strong> The long JWT key starting with <code>eyJ...</code> (generated from their Foodics Developer settings).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="glass-card p-4 mb-4">
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="step-badge">2</div>
+                <div>
+                    <h4 class="text-white fw-bold mb-1">Save Credentials in the Portal</h4>
+                    <p class="text-secondary small mb-0">Log into your Client Portal using your <strong>Client Access Key</strong>, then configure the system:</p>
+                </div>
+            </div>
+            <div class="ps-5">
+                <ol class="small text-secondary mb-0 d-flex flex-column gap-2">
+                    <li>Fill in the Restaurant Name, WooCommerce URL, and Foodics URL.</li>
+                    <li>Paste the <strong>Foodics Bearer Token</strong> into the exact field designated for it.</li>
+                    <li>Create your own secure <strong>Webhook Secret</strong> (write it down or generate a random string like <code>secret123456</code>) and paste it into the Webhook Secret field.</li>
+                    <li>Click <strong>Encrypt & Save Settings</strong>.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="glass-card p-4 mb-4">
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="step-badge">3</div>
+                <div>
+                    <h4 class="text-white fw-bold mb-1">Copy Your Webhook URL</h4>
+                    <p class="text-secondary small mb-0">On the bottom left of your Client Portal, you will see your unique Webhook Endpoint URL displayed like this:</p>
+                </div>
+            </div>
+            <div class="ps-5">
+                <div class="code-box mb-3">
+                    https://your-domain.com/api/Webhooks/woocommerce/order-created/{your-tenant-id}
+                </div>
+                <p class="small text-secondary mb-0">Click the <strong>Copy Webhook Link</strong> button. You will need to paste this URL into WordPress twice in the next steps.</p>
+            </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="glass-card p-4 mb-4">
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="step-badge">4</div>
+                <div>
+                    <h4 class="text-white fw-bold mb-1">Setup Webhook 1: Order Creation</h4>
+                    <p class="text-secondary small mb-0">Log into the restaurant's WordPress Dashboard and navigate to:</p>
+                </div>
+            </div>
+            <div class="ps-5">
+                <div class="code-box mb-3">
+                    WooCommerce ➔ Settings ➔ Advanced ➔ Webhooks ➔ Add Webhook
+                </div>
+                <ul class="small text-secondary mb-0 d-flex flex-column gap-2">
+                    <li><strong>Name:</strong> <code>Foodics Order Sync</code></li>
+                    <li><strong>Status:</strong> Select <code>Active</code></li>
+                    <li><strong>Topic:</strong> Select <code>Order Created</code></li>
+                    <li><strong>Delivery URL:</strong> Paste the Webhook URL you copied in Step 3.</li>
+                    <li><strong>Secret:</strong> Paste the Webhook Secret you created in Step 2.</li>
+                    <li><strong>API Version:</strong> Select <code>WP REST API Integration v3</code></li>
+                </ul>
+                <div class="mt-3">
+                    <button class="btn btn-sm btn-success px-4 fw-semibold" disabled>Save Webhook</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="glass-card p-4 mb-4">
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="step-badge">5</div>
+                <div>
+                    <h4 class="text-white fw-bold mb-1">Setup Webhook 2: Inventory Returns / Refunds</h4>
+                    <p class="text-secondary small mb-0">To ensure inventory syncs correctly when an order is cancelled or refunded, create a second webhook in WooCommerce:</p>
+                </div>
+            </div>
+            <div class="ps-5">
+                <div class="code-box mb-3">
+                    WooCommerce ➔ Settings ➔ Advanced ➔ Webhooks ➔ Add Webhook
+                </div>
+                <ul class="small text-secondary mb-0 d-flex flex-column gap-2">
+                    <li><strong>Name:</strong> <code>Foodics Stock Update (Returns)</code></li>
+                    <li><strong>Status:</strong> Select <code>Active</code></li>
+                    <li><strong>Topic:</strong> Select <code>Order Updated</code></li>
+                    <li><strong>Delivery URL:</strong> Paste the same Webhook URL from Step 3, but change <code>order-created</code> to <code>order-updated</code> at the end.</li>
+                    <li><strong>Secret:</strong> Paste the same Webhook Secret you created in Step 2.</li>
+                    <li><strong>API Version:</strong> Select <code>WP REST API Integration v3</code></li>
+                </ul>
+                <div class="mt-3">
+                    <button class="btn btn-sm btn-success px-4 fw-semibold" disabled>Save Webhook</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 6 -->
+        <div class="glass-card p-4">
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="step-badge">6</div>
+                <div>
+                    <h4 class="text-white fw-bold mb-1">Verify Live Traffic & Automated Stock Sync</h4>
+                    <p class="text-secondary small mb-0">Go back to your Client Portal and look at the "Live Traffic & Order Logs" terminal on the right.</p>
+                </div>
+            </div>
+            <div class="ps-5">
+                <p class="small text-secondary mb-2">1. <strong>Stock Sync:</strong> Your system runs an automated background task to sync Foodics inventory to WooCommerce. Wait a few minutes and watch for this green log to confirm inventory is flowing:</p>
+                <div class="code-box text-success mb-3">
+                    [StockSync] Success: WooCommerce stock updated for product XYZ
+                </div>
+                <p class="small text-secondary mb-2">2. <strong>Order Sync:</strong> Place a test order on the WooCommerce website. You should instantly see this log confirm the connection:</p>
+                <div class="code-box text-success">
+                    [OrderCreated] Success: Foodics order created successfully.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

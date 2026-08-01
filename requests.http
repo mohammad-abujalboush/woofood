@@ -1,0 +1,134 @@
+@baseUrl = https://widen-raisin-backdrop.ngrok-free.dev/api
+@masterKey = 520c10fc35534c5c973e57371b036f6d
+@tenantId = 0a1f91dc-cf22-4034-ad1e-0d08249bd990
+@webhookKey = ed36db564e2546b48a89d35a1ba1a228
+
+### ---------------------------------------------------------
+### STEP 1: CREATE THE STORE IN THE NEW DATABASE
+### ---------------------------------------------------------
+POST {{baseUrl}}/Admin/tenants
+Content-Type: application/json
+X-Api-Key: {{masterKey}}
+
+{
+  "id": "{{tenantId}}",
+  "name": "Kid You Knot Baby Store",
+  "wooCommerceBaseUrl": "https://smart.kidyouknot.com/",
+  "foodicsBaseUrl": "https://api-sandbox.foodics.com/"
+}
+
+### ---------------------------------------------------------
+### STEP 2: GET FRESH FOODICS TOKENS
+### ---------------------------------------------------------
+POST https://api-sandbox.foodics.com/oauth/token
+Content-Type: application/json
+
+{
+  "grant_type": "authorization_code",
+  "client_id": "9d949103-d90b-4d0e-99ea-28d298f3d10c",
+  "client_secret": "m70D5N48x47IPWfX7twIrw4BkKHV1StkV4eD3aoY",
+  "code": "def502002462e6e861c7c684312d96658fe5c740d6166e40bc7f6e0f3805227a8d89e0886bec9f8c82885e89eee74630eaa0284f2a55ee30db4ecb73f79788f2df1dcb178e712af09bd1a7b8f5f9414a1b56f923f83afd154f433374184b4217f77a6ed8e416b04f933a5250042647e3aad8de8703c73025a3e59d6ac6808ab3569068ce33600da5f5b3c2fbc21bfd6712c975d788df81850eb956e7dbb65bb12532d520667b79f904c0dccd16dab2f8dedf1d8e7eb50185cec5b1c30de7bff8ec941088eceec25ba34f11f2cb523aaa7d8a5a6f7c8e957159642bd72324fc057c45e6c2f8c085f8e092f78fa51203f42deb5e7bcc484212823ddf5f7606d932265aa9d2a509028e7eae2584400689baf44e2daec20ec08eb45d60ef5361a8245e4a4664fb7e2686e43e0d2e94b42e4001a2a35d4b8fc4851272f153dd8af6b4783feb51fd41783a977ee172ee75fc797a3ca94c775a57570164471ec1258c1e5ee854e678bdd5e06888d8e2c475dd8653a8128102bc2354e3f50ef0f489690702702e9d981685c78667f35a001a59124564178a34ab1961baa536f0c8bbbf18d3dad0a47ea4c20dd3c7b3475754d3c6fa2745bcfd",
+  "redirect_uri": "https://console-sandbox.foodics.com/dashboard"
+}
+
+### ---------------------------------------------------------
+### STEP 3: INJECT LIVE CREDENTIALS INTO DATABASE
+### ---------------------------------------------------------
+
+### 3A. Update LIVE WooCommerce Credentials
+POST {{baseUrl}}/Admin/tenantcredentials/{{tenantId}}
+Content-Type: application/json
+X-Api-Key: {{masterKey}}
+
+{
+  "tenantId": "{{tenantId}}",
+  "systemType": "WooCommerce",
+  "apiKey": "ck_26f96b2d0322ba4591e3b0a1152d8dfa0f30e1bf",
+  "apiSecret": "cs_ba665476d88739a9965084705a211d71a7ba4cda"
+}
+
+### 3B. Update LIVE Foodics Access Token (PASTE NEW ACCESS TOKEN HERE)
+POST {{baseUrl}}/Admin/tenantcredentials/{{tenantId}}
+Content-Type: application/json
+X-Api-Key: {{masterKey}}
+
+{
+  "tenantId": "{{tenantId}}",
+  "systemType": "Foodics",
+  "apiKey": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5ZDk0OTEwMy1kOTBiLTRkMGUtOTllYS0yOGQyOThmM2QxMGMiLCJqdGkiOiI1MzBlY2FlNjliNGUwZDE3MWY5Njg0N2FiYjgxMWQ3NGM5YjU3YTA2MDQzZGE3MDI4NTEyNjQyNjI0MWQyZGNkOTI5MDVkZDhlZWZiY2ZmNCIsImlhdCI6MTc4NTM2NjYyOC44MTQwMSwibmJmIjoxNzg1MzY2NjI4LjgxNDAxLCJleHAiOjE5NDMxMzMwMjguNzYwODE2LCJzdWIiOiI5ZDk0OTA1MC0xYTIyLTRiOTYtYTljOC1mNGRlZGQ4ODczOWEiLCJzY29wZXMiOltdLCJidXNpbmVzcyI6IjlkOTQ5MDUwLTFiZmQtNGQyNC05MDMyLWU5Y2RmMjMyYjU5ZSIsInJlZmVyZW5jZSI6Ijk4NDM4NSJ9.D8yNvV42Oyic4QOkRRxx0Z8YJPrZvIemR3IMoH0SZqKxqM6u-P1zzsHnm1uzJW5dPwsvbz8o_-hiKhGTOqktAwsroemKPBfMYwuZH2EgZxhWpTRDhZ47LrD0L16bbrv6tOSoi5o17Sm1Jgfu0Ek40UbcZVGUM7Vug0g-OzLIBkyV7feTINBDAtAQrxvyq-L90RxvZS5V4Akn_CtRM3ZpL-WxhGeFbV15ixiOp1ZCSzSPoMLk7LbpcupzIr-L-Bsp6iXS1jtF5xViuqxbWag73MPgwU5gzcMTshBL7de3uau3bc1xvsyjM0FtOsaMmFVMlM9xkXSZP7Tddki5ocuJ_bDVIE0V3mvNnNFfFu-aA_zQTAAh-wEuxyFbbUeDBEhOqFkY2P0pTqjVMpQn-IlQ_UzleJPjPseewkvoX1XCSmzS30TJhRH7_OmmRO4G906qA-3w5ErNGYok2r_qXVLMemZMdXRT6cJ6ouXJipspaSwmefXLdQSQNfWFZvQ9QZXa20d6uTvBfubzp7MgT_npMX-tIc_9SMXZ7csoAamGWKGRsncLgTQFOTgsikW587eZQJwqJmnIPnlZ5E6N3zShuoVbqvwnwW2rrrm7tcBiUKSkfldnmeF2fcZl2qI5uTFlIvdj043wZ9uOUaLHynfKB9jRGbN3W245Bvl4z4wxoY8"
+}
+
+### 3C. Save Foodics Refresh Token (PASTE NEW REFRESH TOKEN HERE)
+POST {{baseUrl}}/Admin/tenantcredentials/{{tenantId}}
+Content-Type: application/json
+X-Api-Key: {{masterKey}}
+
+{
+  "tenantId": "{{tenantId}}",
+  "systemType": "FoodicsRefreshToken",
+  "apiKey": "def5020092d7c3a232045abc845179524a427f018a2b9dfa85f0e7934a23b53271e6281bba638fb1d8fc2e51609f4c4cd54027af4f1b60f3fd7a06e088529b2b157bca6a5798d10669494ee37812969c884f30e3ae7e5621048ce25ae5525e7bd2e33dff0132eb9d5ebf78bbe4a54dba26d293783c15e206425bd342956f6b2f8e09c85b27843675997ec02303e54838ce62804948aad29f6af37cefe1ed46edfed2ed75f2a0531f759058fb254c94b1c04f1f77aa42dff5d5b2b3f44e7498c03094af0b3446c41d9cc173aaf9f7fb5edfaf8764260846a3471f4a76f5dc4e0ea79dcd5377d3a0bb72f3f59e19e54e7a42027c4c4b33f72cfb8c2e2bfa480c1cbbaa6a63a5b7ae690786e861d662681cfd7073784d80ff329a24adff4cf13a1b7ccae3fc019fecbcce1926481e7585e3903c1b0662781bdfbfc8a29cecfd49237e8b7f87aa26dda9cc97087cc6dde9a9468985a5028761277a849dc413a815f331110d5ec63ec40cbea95feebc7822d13669b36e1d66564835f3b0390e58834dead0bdb95063667727dec1be37919eea40428c6b64b11a3f51465bbd645725c05506368859b7cdde5e"
+}
+
+### 3D. Save WooCommerce Webhook Secret
+POST {{baseUrl}}/Admin/tenantcredentials/{{tenantId}}
+Content-Type: application/json
+X-Api-Key: {{masterKey}}
+
+{
+  "tenantId": "{{tenantId}}",
+  "systemType": "WooCommerceWebhookSecret",
+  "apiKey": "{{webhookKey}}" 
+}
+
+### Generate Fresh Foodics Token
+POST https://api-sandbox.foodics.com/v5/oauth/token
+Content-Type: application/json
+
+{
+  "client_id": "9d949103-d90b-4d0e-99ea-28d298f3d10c",
+  "client_secret": "m70D5N48x47IPWfX7twIrw4BkKHV1StkV4eD3aoY",
+  "grant_type": "client_credentials"
+}
+
+
+### Simulate WooCommerce Order Webhook 
+POST {{baseUrl}}/Webhooks/woocommerce/order-created/{{tenantId}}
+Content-Type: application/json
+X-Api-Key: {{webhookKey}}
+
+{
+  "id": 8888,
+  "status": "processing",
+  "total": 5.00,
+  "currency": "JOD",
+  "lineItems": [
+    {
+      "id": 10,
+      "name": "test Product",
+      "productId": "sk-0001",
+      "quantity": 1,
+      "price": 5.00,
+      "total": 5.00
+    }
+  ],
+  "billing": {
+    "firstName": "API",
+    "lastName": "Test",
+    "address1": "123 Test St",
+    "city": "Amman",
+    "state": "AM",
+    "postcode": "11118",
+    "country": "JO",
+    "email": "test@example.com",
+    "phone": "0790000000"
+  },
+  "shipping": {
+    "firstName": "API",
+    "lastName": "Test",
+    "address1": "123 Test St",
+    "city": "Amman",
+    "state": "AM",
+    "postcode": "11118",
+    "country": "JO"
+  }
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WooFood Integration | Middleman Setup Manual</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0b0f19; color: #e5e7eb; font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.6; }
+        .glass-card { background: rgba(21, 29, 46, 0.75); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; }
+        .code-block { background: #060911; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #38bdf8; }
+        .step-num { width: 32px; height: 32px; background: #2563eb; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+    </style>
+</head>
+<body class="py-5">
+    <div class="container max-w-4xl">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1.5 rounded-pill font-monospace mb-2">Operational Playbook</span>
+            <h1 class="fw-bold text-white">WooCommerce ⇄ Foodics Integration Manual</h1>
+            <p class="text-secondary">Step-by-step instructions for Onboarding Specialists & Technical Engineers.</p>
+        </div>
+
+        <!-- 1. Requirements -->
+        <div class="glass-card p-4 mb-4">
+            <h4 class="text-white fw-bold mb-3 d-flex align-items-center gap-2">
+                <i class="bi bi-card-checklist text-primary"></i> 1. Credentials Checklist (What to request from client)
+            </h4>
+            <p class="small text-secondary mb-3">Before initiating onboarding, make sure you collect the following details from the restaurant owner:</p>
+            <div class="table-responsive">
+                <table class="table table-dark table-bordered border-secondary border-opacity-25 small mb-0">
+                    <thead>
+                        <tr><th>Item</th><th>Where to Find It</th><th>Example Value</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>WooCommerce Base URL</td><td>Restaurant domain name</td><td><code>https://burgerhouse.com</code></td></tr>
+                        <tr><td>WooCommerce Secret</td><td>Generated when creating Webhook in WP-Admin</td><td><code>ed36db564e2546b48a89d35a...</code></td></tr>
+                        <tr><td>Foodics API Domain</td><td>Sandbox or Production API endpoint</td><td><code>https://api-sandbox.foodics.com</code></td></tr>
+                        <tr><td>Foodics Bearer Token</td><td>Foodics Developer Console / App Settings</td><td><code>eyJhbGciOiJIUzI1Ni...</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 2. Step-by-Step Onboarding Process -->
+        <div class="glass-card p-4 mb-4">
+            <h4 class="text-white fw-bold mb-4 d-flex align-items-center gap-2">
+                <i class="bi bi-diagram-3-fill text-info"></i> 2. Complete Onboarding Procedure
+            </h4>
+
+            <div class="d-flex gap-3 mb-4">
+                <div class="step-num">1</div>
+                <div>
+                    <h6 class="fw-bold text-white mb-1">Create Tenant Shell in Admin Dashboard</h6>
+                    <p class="small text-secondary mb-1">Open <code>index.html</code>, input the restaurant name and WooCommerce URL, then click <strong>Provision Tenant Shell</strong>.</p>
+                    <p class="small text-secondary">Copy the generated <strong>Client Access Key (Tenant ID)</strong> from the directory list.</p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 mb-4">
+                <div class="step-num">2</div>
+                <div>
+                    <h6 class="fw-bold text-white mb-1">Inject Encrypted Credentials in Client Portal</h6>
+                    <p class="small text-secondary mb-1">Open <code>client.html</code>, log in using the Tenant ID, paste the client's WooCommerce Secret & Foodics Bearer Token into the secure fields, and click <strong>Encrypt & Save Credentials</strong>.</p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 mb-4">
+                <div class="step-num">3</div>
+                <div>
+                    <h6 class="fw-bold text-white mb-1">Configure WooCommerce Webhook Listener</h6>
+                    <p class="small text-secondary mb-1">Log into the restaurant's WordPress Dashboard and navigate to:</p>
+                    <div class="code-block mb-2">WooCommerce ➔ Settings ➔ Advanced ➔ Webhooks ➔ Add Webhook</div>
+                    <ul class="small text-secondary mb-0">
+                        <li><strong>Name:</strong> Foodics Sync Order Created</li>
+                        <li><strong>Status:</strong> Active</li>
+                        <li><strong>Topic:</strong> Order Created</li>
+                        <li><strong>Delivery URL:</strong> Paste the exact Webhook Endpoint from <code>client.html</code> (e.g. <code>https://your-domain.com/api/Webhooks/woocommerce/order-created/{tenantId}</code>)</li>
+                        <li><strong>Secret:</strong> Paste the exact Webhook Secret configured in step 2.</li>
+                        <li><strong>API Version:</strong> WP REST API Integration v3</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3">
+                <div class="step-num">4</div>
+                <div>
+                    <h6 class="fw-bold text-white mb-1">Run Verification Order</h6>
+                    <p class="small text-secondary mb-0">Either place a live test order on WooCommerce or use section 3 in <code>index.html</code> to trigger an order simulation. Verify that the terminal logs record a green <strong>Success</strong> entry.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Troubleshooting Matrix -->
+        <div class="glass-card p-4">
+            <h4 class="text-white fw-bold mb-3 d-flex align-items-center gap-2">
+                <i class="bi bi-wrench-adjustable-circle text-warning"></i> 3. Troubleshooting Matrix
+            </h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-bordered border-secondary border-opacity-25 small mb-0">
+                    <thead>
+                        <tr><th>Error Signature</th><th>Root Cause</th><th>Immediate Solution</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-danger font-monospace">401 Unauthenticated</td>
+                            <td>Foodics JWT Bearer Token is expired or invalid.</td>
+                            <td>Generate a fresh Bearer Token in Foodics Console and re-save via <code>client.html</code>.</td>
+                        </tr>
+                        <tr>
+                            <td class="text-danger font-monospace">Padding is invalid</td>
+                            <td>Mismatch in AES Master Encryption keys.</td>
+                            <td>Ensure <code>EncryptionService.cs</code> uses matching password/salt settings. Re-save keys in portal.</td>
+                        </tr>
+                        <tr>
+                            <td class="text-danger font-monospace">Not a valid Base-64 string</td>
+                            <td>Raw unencrypted credentials stored directly in database.</td>
+                            <td>Use <code>client.html</code> form to force execution of the controller's AES encryptor.</td>
+                        </tr>
+                        <tr>
+                            <td class="text-danger font-monospace">Foodics API Error (400)</td>
+                            <td>Invalid SKU or Product ID in test payload.</td>
+                            <td>Ensure Product ID in WooCommerce payload exists in Foodics sandbox inventory.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+/config/workspace/WooFood/WooFoodIntegration.Application/bin/Debug/net8.0/WooFoodIntegration.Application.deps.json
+/config/workspace/WooFood/WooFoodIntegration.Application/bin/Debug/net8.0/WooFoodIntegration.Application.dll
+/config/workspace/WooFood/WooFoodIntegration.Application/bin/Debug/net8.0/WooFoodIntegration.Application.pdb
+/config/workspace/WooFood/WooFoodIntegration.Application/bin/Debug/net8.0/WooFoodIntegration.Domain.dll
+/config/workspace/WooFood/WooFoodIntegration.Application/bin/Debug/net8.0/WooFoodIntegration.Domain.pdb
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/WooFoodIntegration.Application.csproj.AssemblyReference.cache
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/WooFoodIntegration.Application.GeneratedMSBuildEditorConfig.editorconfig
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/WooFoodIntegration.Application.AssemblyInfoInputs.cache
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/WooFoodIntegration.Application.AssemblyInfo.cs
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/WooFoodIntegration.Application.csproj.CoreCompileInputs.cache
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/WooFoodI.500DB56B.Up2Date
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/WooFoodIntegration.Application.dll
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/refint/WooFoodIntegration.Application.dll
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/WooFoodIntegration.Application.pdb
+/config/workspace/WooFood/WooFoodIntegration.Application/obj/Debug/net8.0/ref/WooFoodIntegration.Application.dll
